@@ -1,7 +1,7 @@
 import torch
 from torch import nn
-from regressor import Regressor
-from depth_decoder import Decoder
+from .regressor import Regressor
+from .depth_decoder import Decoder
 
 
 class ComposedModel(nn.Module):

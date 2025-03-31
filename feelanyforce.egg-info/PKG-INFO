@@ -1,0 +1,9 @@
+Metadata-Version: 2.2
+Name: feelanyforce
+Version: 0.0.0
+Summary: FeelAnyForce
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.9
+Dynamic: classifier
+Dynamic: requires-python
+Dynamic: summary

@@ -212,10 +212,10 @@ class RGB2NormNet(nn.Module):
 
 
 class Reconstruction3D:
-    def __init__(self, dev):
+    def __init__(self, imgh, imgw):
         self.cpuorgpu = "cpu"
         self.dm_zero_counter = 0
-        self.dm_zero = np.zeros((dev.imgw, dev.imgh))
+        self.dm_zero = np.zeros((imgw, imgh))
         pass
 
     def load_nn(self, net_path, cpuorgpu):
