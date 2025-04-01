@@ -1,5 +1,5 @@
 import argparse
-import utils
+import feelanyforce.utils as utils
 import os
 dir_name = os.path.abspath(os.path.dirname(__file__))
 def get_parser():

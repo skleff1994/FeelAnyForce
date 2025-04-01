@@ -212,8 +212,8 @@ class RGB2NormNet(nn.Module):
 
 
 class Reconstruction3D:
-    def __init__(self, imgh, imgw):
-        self.cpuorgpu = "cpu"
+    def __init__(self, imgh, imgw, device='cpu'):
+        self.cpuorgpu = device
         self.dm_zero_counter = 0
         self.dm_zero = np.zeros((imgw, imgh))
         pass
@@ -221,13 +221,12 @@ class Reconstruction3D:
     def load_nn(self, net_path, cpuorgpu):
 
         self.cpuorgpu = cpuorgpu
-        device = torch.device(cpuorgpu)
 
         if not os.path.isfile(net_path):
             print('Error opening ', net_path, ' does not exist')
             return
 
-        net = RGB2NormNet().float().to(device)
+        net = RGB2NormNet().float().to(torch.device(cpuorgpu))
 
         if cpuorgpu == "cuda":
             ### load weights on gpu
