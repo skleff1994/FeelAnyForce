@@ -66,7 +66,7 @@ class Predictor:
         dev.connect()
 
         ''' Load neural network '''
-        net_path = os.path.join("sensors/gsrobotics", net_file_path)
+        net_path = os.path.join("feelanyforce/sensors/gsrobotics", net_file_path)
         print('mini net path = ', net_path)
 
         if GPU:
@@ -74,7 +74,9 @@ class Predictor:
         else:
             gpuorcpu = "cpu"
 
-        depth_nn = gs3drecon.Reconstruction3D(dev)
+        self.imgh = 240
+        self.imgw = 320
+        depth_nn = gs3drecon.Reconstruction3D(self.imgh, self.imgw)
         net = depth_nn.load_nn(net_path, gpuorcpu)
 
         f0 = dev.get_raw_image()
@@ -126,7 +128,7 @@ class Predictor:
             intermediate_output = intermediate_output_rgb
             output = self.model.regressor(intermediate_output)
 
-        output = output.cpu()
+        output = output.cuda()
         cv2.imshow('image_rgb_check', np.array(im))
         cv2.waitKey(1)
         print(f"Force predicted: {output}")
@@ -135,5 +137,16 @@ class Predictor:
 
 if __name__ == '__main__':
     p = Predictor()
+    n = 0
+    sum = 0
+    import time
     while True:
+        tic = time.time()
         p.predict()
+        tac = time.time()
+        print(tac - tic)
+        n+=1
+        sum += (tac - tic)
+        avg = sum/n
+        print("avg duration = ", avg)
+        print("AVG rate = ", 1./avg)
