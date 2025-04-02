@@ -8,7 +8,7 @@ class ComposedModel(nn.Module):
     """
     Neural network model composed of a tactile backbone, a regressor, and a decoder.
     """
-    def __init__(self, args, device="cuda"):
+    def __init__(self, args, device="cpu"):
         """
         Initializes the ComposedModel with the specified arguments.
 
@@ -21,6 +21,7 @@ class ComposedModel(nn.Module):
         self.args = args
         self.device = torch.device(device)
 
+        torch.hub._validate_not_a_forked_repo=lambda a,b,c: True # https://github.com/pytorch/pytorch/issues/61755#issuecomment-885801511
         self.tactile_backbone = torch.hub.load(args.tactile_repo, args.tactile_model)
         tactile_embed_dim = self.tactile_backbone.embed_dim * (args.n_last_blocks + int(args.avgpool_patchtokens))
             
